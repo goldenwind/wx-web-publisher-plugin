@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.0'
+}
+
+group 'org.wx'
+version '1.0.9'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "http://jcenter.bintray.com"}
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    pluginName = 'wx-web-publisher-plugin'
+    updateSinceUntilBuild = false
+}
+patchPluginXml {
+    changeNotes =  """
+    <h1>V1.0.1</h1>
+    <ul>
+        <li>代码界面右键增加发布工具入口菜单"WX Web Publisher"</li>
+        <li>正式环境 全局快捷键:Ctrl + Alt + NumPad-1</li>
+        <li>测试环境 全局快捷键:Ctrl + Alt + NumPad-2</li>
+    </ul>
+   """
+}
+test {
+    useJUnitPlatform()
+}

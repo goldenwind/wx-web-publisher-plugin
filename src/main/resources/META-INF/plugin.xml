@@ -1,0 +1,54 @@
+<idea-plugin>
+    <id>org.wx.web_publisher</id>
+    <name>WX Web Publisher Tool</name>
+    <vendor email="jim@wangxutech.com" url="https://www.wangxutech.com">网旭科技</vendor>
+    <idea-version since-build="162"/>
+    <description><![CDATA[
+    <h2>无缝集成"网旭Web发布工具"到IDEA系列产品</h2><br>
+    <h3>当前功能:</h3>
+    <ul>
+      <li>代码界面/ProjectTree右键增加发布工具入口菜单"WX Web Publisher"</li>
+      <li>发布正式环境 全局快捷键:Ctrl + Alt + NumPad-1</li>
+      <li>发布测试环境 全局快捷键:Ctrl + Alt + NumPad-2</li>
+      <li>注意:</li>
+      <li>暂不支持非Windows系统</li>
+    </ul>
+    ]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="org.wx.web_publisher_plugin.action.wx_publish_menu" popup="true"
+               text="WX Web Publisher" description="网旭Web发布工具"
+               icon="SdkIcons.menu_icon"
+        >
+            <!--add menu to tree and editor-->
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+
+            <action id="org.intellij.sdk.action.DeployProduction"
+                    text="Deploy[Production ].."
+                    description="发布到生产环境"
+                    icon="SdkIcons.production_icon"
+                    class="org.wx.web_publisher_plugin.action.PopupDeployAction">
+                <add-to-group group-id="org.wx.web_publisher_plugin.action.wx_publish_menu" anchor="first"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="control alt NUMPAD1"/>
+            </action>
+            <action id="org.intellij.sdk.action.DeployTest"
+                    text="Deploy[Test ].."
+                    description="发布到测试环境"
+                    icon="SdkIcons.test_icon"
+                    class="org.wx.web_publisher_plugin.action.PopupDeployAction">
+                <add-to-group group-id="org.wx.web_publisher_plugin.action.wx_publish_menu" anchor="first"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="control alt NUMPAD2"/>
+            </action>
+        </group>
+    </actions>
+</idea-plugin>

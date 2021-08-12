@@ -25,30 +25,34 @@
 
     <actions>
         <!-- Add your actions here -->
-        <group id="org.wx.web_publisher_plugin.action.wx_publish_menu" popup="true"
-               text="WX Web Publisher" description="网旭Web发布工具"
-               icon="SdkIcons.menu_icon"
-        >
+<!--        <group id="org.wx.web_publisher_plugin.action.wx_publish_menu" popup="true"-->
+<!--               text="WX Web Publisher" description="网旭Web发布工具"-->
+<!--               icon="SdkIcons.menu_icon"-->
+<!--        >-->
             <!--add menu to tree and editor-->
-            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
 
-            <action id="org.intellij.sdk.action.DeployProduction"
+        <action id="org.intellij.sdk.action.DeployProduction"
                     text="Deploy[Production ].."
                     description="发布到生产环境"
                     icon="SdkIcons.production_icon"
                     class="org.wx.web_publisher_plugin.action.PopupDeployAction">
-                <add-to-group group-id="org.wx.web_publisher_plugin.action.wx_publish_menu" anchor="first"/>
-                <keyboard-shortcut keymap="$default" first-keystroke="control alt NUMPAD1"/>
-            </action>
-            <action id="org.intellij.sdk.action.DeployTest"
-                    text="Deploy[Test ].."
-                    description="发布到测试环境"
-                    icon="SdkIcons.test_icon"
-                    class="org.wx.web_publisher_plugin.action.PopupDeployAction">
-                <add-to-group group-id="org.wx.web_publisher_plugin.action.wx_publish_menu" anchor="first"/>
-                <keyboard-shortcut keymap="$default" first-keystroke="control alt NUMPAD2"/>
-            </action>
-        </group>
+            <keyboard-shortcut keymap="$default" first-keystroke="control alt NUMPAD1"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="control alt PAGE_UP"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+            <add-to-group group-id="Vcs.Log.ChangesBrowser.Popup" anchor="first"/>
+        </action>
+        <action id="org.intellij.sdk.action.DeployTest"
+                text="Deploy[Test ].."
+                description="发布到测试环境"
+                icon="SdkIcons.test_icon"
+                class="org.wx.web_publisher_plugin.action.PopupDeployAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="control alt NUMPAD2"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="control alt PAGE_DOWN"/>
+            <add-to-group group-id="EditorPopupMenu" relative-to-action="org.intellij.sdk.action.DeployProduction" anchor="after"/>
+            <add-to-group group-id="ProjectViewPopupMenu" relative-to-action="org.intellij.sdk.action.DeployProduction" anchor="after"/>
+            <add-to-group group-id="Vcs.Log.ChangesBrowser.Popup" relative-to-action="org.intellij.sdk.action.DeployProduction" anchor="after"/>
+        </action>
+<!--        </group>-->
     </actions>
 </idea-plugin>

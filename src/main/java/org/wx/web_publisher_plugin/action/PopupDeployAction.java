@@ -5,9 +5,11 @@ package org.wx.web_publisher_plugin.action;
 import com.intellij.ide.projectView.ProjectView;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vcs.changes.Change;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiDocumentManager;
@@ -81,7 +83,7 @@ public class PopupDeployAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent event) {
         // Using the event, create and show a dialog
         Project currentProject = event.getProject();
-
+        DataContext currentDataContext = event.getDataContext();
         // env
         String finalEnv = "";
         String selectedEnv = event.getPresentation().getText();
@@ -98,12 +100,20 @@ public class PopupDeployAction extends AnAction {
         String finalPath = vFile.getPath();
 
         // project view right click
-        if (event.getPlace() == "ProjectViewPopup") {
+        if (event.getPlace().equals("ProjectViewPopup")) {
             Object psiFileTree = ProjectView.getInstance(currentProject).getCurrentProjectViewPane().getSelectedElement();
             if (psiFileTree instanceof PsiDirectory) {
                 finalPath = ((PsiDirectory) psiFileTree).getVirtualFile().getPath();
             } else if (psiFileTree instanceof PsiFile) {
                 finalPath = ((PsiFile) psiFileTree).getVirtualFile().getPath();
+            }
+        }else if (event.getPlace().equals("ChangesTreePopup")){
+            Change[] selectedChanges = (Change[]) currentDataContext.getData("ChangeListView.SelectedChange");
+            assert selectedChanges != null;
+            if (selectedChanges.length == 1) {
+                finalPath = selectedChanges[0].getAfterRevision().getFile().getPath();
+            }else{
+                // todo 提示暂不支持目录发布( 这种情况是选中了目录 )
             }
         }
 
